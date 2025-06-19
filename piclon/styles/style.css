@@ -1,0 +1,215 @@
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f8f8;
+  color: #333;
+  line-height: 1.4;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  background-color: #31308a;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+#logo {
+  width: 120px;
+  height: auto;
+  cursor: pointer;
+  user-select: none;
+  display: block;
+  max-width: 100%;
+}
+
+#formularioBusqueda {
+  flex-grow: 1;
+  margin: 0 20px;
+  display: flex;
+  max-width: 500px;
+}
+
+#inputBusqueda {
+  flex-grow: 1;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px 0 0 4px;
+  font-size: 1rem;
+}
+
+#formularioBusqueda button {
+  padding: 8px 16px;
+  border: none;
+  background-color: #1e90ff;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 0 4px 4px 0;
+  transition: background-color 0.3s ease;
+}
+
+#formularioBusqueda button:hover,
+#formularioBusqueda button:focus {
+  background-color: #1c7ed6;
+  outline: none;
+}
+
+.menu {
+  position: relative;
+}
+
+.hamburger {
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+}
+
+.hamburger:focus {
+  outline: 2px solid #1e90ff;
+  outline-offset: 2px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 15px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 6px 8px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.nav-links a:hover,
+.nav-links a:focus {
+  background-color: #1e90ff;
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background-color: #222;
+    position: absolute;
+    top: 48px;
+    right: 0;
+    padding: 10px 20px;
+    border-radius: 4px;
+    width: 150px;
+  }
+
+  .nav-links.activo {
+    display: flex;
+  }
+}
+
+.historial {
+  padding: 10px 20px;
+  background-color: #f0f0f0;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.botonReciente {
+  background-color: #1e90ff;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.botonReciente:hover,
+.botonReciente:focus {
+  background-color: #1c7ed6;
+  outline: none;
+}
+
+.masonry {
+  column-count: 3;
+  column-gap: 16px;
+  padding: 10px 20px;
+}
+
+@media (max-width: 1024px) {
+  .masonry {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .masonry {
+    column-count: 1;
+  }
+}
+
+.card {
+  break-inside: avoid;
+  margin-bottom: 16px;
+  background: white;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.card:hover,
+.card:focus-within {
+  transform: scale(1.03);
+  box-shadow: 0 4px 14px rgb(0 0 0 / 0.2);
+  outline: none;
+}
+
+.card img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.card .info {
+  padding: 10px 12px;
+}
+
+.card .info p {
+  margin-bottom: 6px;
+}
+
+.card .info strong {
+  font-weight: 700;
+}
+
+a:focus,
+button:focus,
+input:focus {
+  outline: 2px solid #1e90ff;
+  outline-offset: 2px;
+}
+

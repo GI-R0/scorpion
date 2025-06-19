@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Galería Visual</title>
+  <link rel="stylesheet" href="./styles/style.css" />
+</head>
+<body>
+  <header>
+    <img id="logo" src="./assets/logopin.png" alt="Logo Galería Visual" tabindex="0" />
+    
+    <form id="formularioBusqueda" aria-label="Formulario de búsqueda de imágenes">
+      <input 
+        type="text" 
+        id="inputBusqueda" 
+        placeholder="Busca una imagen..." 
+        autocomplete="off" 
+        aria-label="Buscar imágenes"
+      />
+      <button type="submit" aria-label="Buscar">Buscar</button>
+    </form>
+
+    <div class="menu">
+      <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menú de navegación">☰</button>
+      <nav class="nav-links" id="navLinks" role="navigation">
+        <a href="#" tabindex="0">Inicio</a>
+        <a href="#" tabindex="0">Explorar</a>
+        <a href="#" tabindex="0">Perfil</a>
+      </nav>
+    </div>
+  </header>
+
+  <section 
+    id="busquedasRecientes" 
+    class="historial" 
+    aria-label="Búsquedas recientes"
+  ></section>
+
+  <main>
+    <div 
+      id="contenedorImagenes" 
+      class="masonry" 
+      aria-live="polite"
+      aria-busy="false"
+    ></div>
+  </main>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
