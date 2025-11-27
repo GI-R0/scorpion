@@ -1,0 +1,29 @@
+type,name,email,password,role,deporte,precioHora,ubicacion,superficie,iluminacion,fecha,horaInicio,horaFin,estado
+user,Admin User,admin@sportify.com,123456,admin,,,,,,,,,
+user,Club Madrid,madrid@sportify.com,123456,club,,,,,,,,,
+user,Club Barcelona,bcn@sportify.com,123456,club,,,,,,,,,
+user,Juan Perez,juan@test.com,123456,user,,,,,,,,,
+user,Maria Garcia,maria@test.com,123456,user,,,,,,,,,
+user,Carlos Lopez,carlos@test.com,123456,user,,,,,,,,,
+user,Ana Martinez,ana@test.com,123456,user,,,,,,,,,
+user,Luis Rodriguez,luis@test.com,123456,user,,,,,,,,,
+user,Elena Sanchez,elena@test.com,123456,user,,,,,,,,,
+user,Pedro Gomez,pedro@test.com,123456,user,,,,,,,,,
+user,Laura Diaz,laura@test.com,123456,user,,,,,,,,,
+user,Miguel Ruiz,miguel@test.com,123456,user,,,,,,,,,
+user,Sofia Torres,sofia@test.com,123456,user,,,,,,,,,
+pista,Pista Central,madrid@sportify.com,,club,Pádel,20,Madrid Centro,Césped,true,,,,
+pista,Pista 2,madrid@sportify.com,,club,Pádel,15,Madrid Centro,Césped,true,,,,
+pista,Pista 3,madrid@sportify.com,,club,Tenis,18,Madrid Centro,Arcilla,false,,,,
+pista,Estadio 1,bcn@sportify.com,,club,Fútbol,50,Barcelona Norte,Césped,true,,,,
+pista,Pista Azul,bcn@sportify.com,,club,Pádel,25,Barcelona Norte,Césped,true,,,,
+reserva,,juan@test.com,,,Pádel,20,,,,2024-12-01,10:00,11:30,confirmada
+reserva,,maria@test.com,,,Pádel,15,,,,2024-12-01,12:00,13:30,confirmada
+reserva,,carlos@test.com,,,Tenis,18,,,,2024-12-02,09:00,10:30,pendiente
+reserva,,ana@test.com,,,Fútbol,50,,,,2024-12-02,18:00,19:30,confirmada
+reserva,,luis@test.com,,,Pádel,25,,,,2024-12-03,16:00,17:30,confirmada
+reserva,,elena@test.com,,,Pádel,20,,,,2024-12-03,18:00,19:30,cancelada
+reserva,,pedro@test.com,,,Pádel,15,,,,2024-12-04,10:00,11:30,confirmada
+reserva,,laura@test.com,,,Tenis,18,,,,2024-12-04,12:00,13:30,confirmada
+reserva,,miguel@test.com,,,Fútbol,50,,,,2024-12-05,19:00,20:30,confirmada
+reserva,,sofia@test.com,,,Pádel,25,,,,2024-12-05,10:00,11:30,pendiente
