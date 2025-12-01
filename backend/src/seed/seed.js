@@ -34,14 +34,11 @@ const mongoUri =
 
 const seed = async () => {
   try {
-    console.log("Conectando a MongoDB...");
     await mongoose.connect(mongoUri);
-    console.log("Conectado a MongoDB");
 
     await User.deleteMany({});
     await Pista.deleteMany({});
     await Reserva.deleteMany({});
-    console.log("Datos antiguos eliminados");
 
     const data = await readCSV("data.csv");
 
@@ -61,7 +58,6 @@ const seed = async () => {
       const newUser = await User.create(u);
       users.push(newUser);
     }
-    console.log(`Usuarios insertados: ${users.length}`);
 
     const userMap = users.reduce((map, u) => {
       map[u.email] = u._id;
@@ -98,7 +94,6 @@ const seed = async () => {
     });
 
     const pistas = await Pista.insertMany(pistasToInsert);
-    console.log(`Pistas insertadas: ${pistas.length}`);
 
     const pistaMap = pistas.reduce((map, p) => {
       map[p.nombre] = p._id;
@@ -127,9 +122,7 @@ const seed = async () => {
       .filter(Boolean);
 
     const reservas = await Reserva.insertMany(reservasToInsert);
-    console.log(`Reservas insertadas: ${reservas.length}`);
 
-    console.log("¡SEMILLA COMPLETADA CON ÉXITO!");
     process.exit(0);
   } catch (err) {
     console.error("Error en seed:", err);

@@ -10,8 +10,6 @@ if (!uri) {
   process.exit(1);
 }
 
-console.log("Probando conexión a MongoDB con MONGODB_URI:", uri.replace(/:(.*)@/, ":****@"));
-
 try {
   // Top-level await es válido en ESM (project usa "type": "module")
   await mongoose.connect(uri, {
@@ -20,7 +18,6 @@ try {
     useUnifiedTopology: true,
   });
 
-  console.log("✅ Conexión a MongoDB establecida correctamente.");
   await mongoose.connection.close();
   process.exit(0);
 } catch (err) {

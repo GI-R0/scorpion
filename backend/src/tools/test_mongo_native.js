@@ -1,6 +1,5 @@
-
-import { MongoClient, ServerApiVersion } from 'mongodb';
-import dotenv from 'dotenv';
+import { MongoClient, ServerApiVersion } from "mongodb";
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -8,16 +7,16 @@ dotenv.config();
 const uri = process.env.MONGODB_URI || process.env.MONGO_URI;
 
 if (!uri) {
-  console.error('ERROR: No se encontró MONGODB_URI ni MONGO_URI en .env');
-  console.error('Ejemplo de URI (no uses credenciales reales aquí):');
-  console.error("mongodb+srv://<user>:<password>@cluster0.xxxxxx.mongodb.net/<dbname>?retryWrites=true&w=majority");
+  console.error("ERROR: No se encontró MONGODB_URI ni MONGO_URI en .env");
+  console.error("Ejemplo de URI (no uses credenciales reales aquí):");
+  console.error(
+    "mongodb+srv://<user>:<password>@cluster0.xxxxxx.mongodb.net/<dbname>?retryWrites=true&w=majority"
+  );
   process.exit(1);
 }
 
 // Mostrar la URI pero ocultando la contraseña para seguridad
-const safeUri = uri.replace(/:(.*?)@/, ':****@');
-console.log('Node.js', process.version);
-console.log('Probando conexión nativa a MongoDB con URI (password oculto):', safeUri);
+const safeUri = uri.replace(/:(.*?)@/, ":****@");
 
 const client = new MongoClient(uri, {
   serverApi: {
@@ -33,10 +32,9 @@ async function run() {
   try {
     // Intentamos conectar con un timeout razonable
     await client.connect();
-    await client.db('admin').command({ ping: 1 });
-    console.log('✅ Ping exitoso. Conexión a MongoDB establecida correctamente.');
+    await client.db("admin").command({ ping: 1 });
   } catch (err) {
-    console.error('❌ Error conectando a MongoDB:');
+    console.error("❌ Error conectando a MongoDB:");
     // Mostrar stack si existe para facilitar debugging local
     console.error(err && err.stack ? err.stack : err);
     process.exit(1);
