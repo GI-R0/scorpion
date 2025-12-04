@@ -1,6 +1,7 @@
 import React from "react";
 import { useAuth } from "../hooks/useAuth";
 import { Link, useNavigate } from "react-router-dom";
+import "../styles/Dashboard.css";
 
 export default function AdminPanel() {
   const { user, logout } = useAuth();
@@ -28,49 +29,37 @@ export default function AdminPanel() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
-      <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-indigo-700 mb-4">
-            Panel de Administración
-          </h1>
-          <p className="text-xl text-gray-600">
+    <div className="dashboard-page">
+      <div className="dashboard-container">
+        <div className="dashboard-header">
+          <h1 className="dashboard-title">Panel de Administración</h1>
+          <p className="dashboard-subtitle">
             Bienvenido,{" "}
-            <span className="font-bold text-indigo-600">
+            <span className="footer-link">
               {user?.name || user?.nombre || user?.email || "Admin"}
             </span>
             . Tienes control total del sistema.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="actions-grid">
           {adminMenus.map((menu) => (
-            <Link
-              key={menu.path}
-              to={menu.path}
-              className="group block bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-indigo-500 p-10 text-center transform hover:-translate-y-2"
-            >
-              <div className="text-6xl mb-6 group-hover:scale-110 transition-transform">
-                {menu.icon}
+            <Link key={menu.path} to={menu.path} className="action-card white">
+              <div className="action-icon">
+                
+                {menu.icon === "Personas" && "👥"}
+                {menu.icon === "Tenis" && "🎾"}
+                {menu.icon === "Calendario" && "📅"}
               </div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-3">
-                {menu.title}
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                {menu.description}
-              </p>
-              <span className="inline-block mt-4 text-indigo-600 font-medium group-hover:text-indigo-800">
-                Ir al módulo →
-              </span>
+              <h3 className="action-title">{menu.title}</h3>
+              <p className="action-desc">{menu.description}</p>
+              <span className="action-link-text">Ir al módulo →</span>
             </Link>
           ))}
         </div>
 
-        <div className="mt-16 text-center space-x-6">
-          <Link
-            to="/perfil"
-            className="inline-block px-8 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition font-medium"
-          >
+        <div className="footer-buttons">
+          <Link to="/perfil" className="btn-secondary">
             Volver al perfil
           </Link>
           <button
@@ -78,28 +67,28 @@ export default function AdminPanel() {
               logout();
               navigate("/");
             }}
-            className="inline-block px-8 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium"
+            className="btn-danger"
           >
             Cerrar sesión
           </button>
         </div>
 
-        <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          <div className="bg-white p-6 rounded-xl shadow">
-            <p className="text-3xl font-bold text-indigo-600">127</p>
-            <p className="text-gray-600">Usuarios</p>
+        <div className="stats-grid" style={{ marginTop: "3rem" }}>
+          <div className="stat-card">
+            <p className="stat-value text-blue">127</p>
+            <p className="stat-label">Usuarios</p>
           </div>
-          <div className="bg-white p-6 rounded-xl shadow">
-            <p className="text-3xl font-bold text-green-600">89</p>
-            <p className="text-gray-600">Pistas</p>
+          <div className="stat-card">
+            <p className="stat-value text-green">89</p>
+            <p className="stat-label">Pistas</p>
           </div>
-          <div className="bg-white p-6 rounded-xl shadow">
-            <p className="text-3xl font-bold text-blue-600">342</p>
-            <p className="text-gray-600">Reservas hoy</p>
+          <div className="stat-card">
+            <p className="stat-value text-blue">342</p>
+            <p className="stat-label">Reservas hoy</p>
           </div>
-          <div className="bg-white p-6 rounded-xl shadow">
-            <p className="text-3xl font-bold text-purple-600">€8.421</p>
-            <p className="text-gray-600">Ingresos mes</p>
+          <div className="stat-card">
+            <p className="stat-value text-purple">€8.421</p>
+            <p className="stat-label">Ingresos mes</p>
           </div>
         </div>
       </div>

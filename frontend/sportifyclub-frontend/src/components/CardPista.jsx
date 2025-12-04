@@ -29,63 +29,54 @@ export default function CardPista({ pista }) {
     pista.horariosDisponibles.length > 0;
 
   return (
-    <Link
-      to={`/pistas/${pista._id}`}
-      className="card hover:shadow-lg transition-all"
-    >
-      <div className="relative overflow-hidden">
+    <Link to={`/pistas/${pista._id}`} className="card">
+      <div className="card-image-container">
         <img
           src={getImageUrl()}
           alt={pista.nombre}
-          className="w-full h-48 object-cover"
+          className="card-image"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 hover:opacity-60 transition-opacity"></div>
+        <div className="card-overlay"></div>
 
-        <div className="absolute top-3 right-3">
+        <div className="card-badge-top-right">
           <span
-            className={`px-3 py-1 rounded text-sm font-semibold text-white ${
-              isAvailable ? "bg-green-500" : "bg-red-500"
+            className={`badge ${
+              isAvailable ? "badge-success" : "badge-danger"
             }`}
           >
             {isAvailable ? "✓ Disponible" : "✗ Ocupada"}
           </span>
         </div>
 
-        <div className="absolute top-3 left-3 bg-white rounded-lg px-2 py-1 text-xs font-bold text-padel-primary">
-          🎾 {pista.deporte || "Pádel"}
-        </div>
+        <div className="card-badge-top-left">🎾 {pista.deporte || "Pádel"}</div>
       </div>
 
       <div className="card-content">
-        <h3 className="text-lg font-bold text-gray-900 mb-3">{pista.nombre}</h3>
+        <h3 className="card-title">{pista.nombre}</h3>
 
-        <div className="space-y-2 mb-4">
-          <div className="flex items-center gap-2 text-sm text-gray-600">
+        <div className="card-info">
+          <div className="card-info-item">
             <span>
               {pista.iluminacion ? "💡 Iluminación LED" : "☀️ Luz natural"}
             </span>
           </div>
-          <div className="flex items-center gap-2 text-sm text-gray-600">
+          <div className="card-info-item">
             <span>🏗️ {pista.superficie || "Césped artificial"}</span>
           </div>
           {pista.ubicacion && (
-            <div className="flex items-center gap-2 text-sm text-gray-600">
+            <div className="card-info-item">
               <span>📍 {pista.ubicacion}</span>
             </div>
           )}
         </div>
 
-        <div className="flex items-baseline gap-1 mb-4">
-          <span className="text-2xl font-bold text-padel-primary">
-            {pista.precioHora}
-          </span>
+        <div className="card-price">
+          <span className="price-amount">{pista.precioHora}</span>
           <span className="text-gray-600">€/hora</span>
         </div>
 
-        <button className="w-full bg-padel-primary text-white py-2 rounded font-semibold hover:bg-padel-secondary transition-colors">
-          Reservar →
-        </button>
+        <button className="btn-full">Reservar →</button>
       </div>
     </Link>
   );

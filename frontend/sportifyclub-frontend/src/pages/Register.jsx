@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import API from "../api/axiosConfig";
+import "../styles/Auth.css";
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -46,8 +47,10 @@ export default function Register() {
         password: formData.password,
       });
 
-      navigate("/login", { 
-        state: { message: "¡Cuenta creada con éxito! Ya puedes iniciar sesión." } 
+      navigate("/login", {
+        state: {
+          message: "¡Cuenta creada con éxito! Ya puedes iniciar sesión.",
+        },
       });
     } catch (err) {
       const mensaje = err.response?.data?.msg || "Error al crear la cuenta";
@@ -58,68 +61,60 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center justify-center px-4 py-12">
+    <div className="login-container">
       <div className="w-full max-w-md">
-        <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
-          <div className="bg-gradient-to-r from-indigo-600 to-purple-600 px-8 py-10 text-center">
-            <h1 className="text-4xl font-bold text-white">SportifyClub</h1>
-            <p className="text-indigo-100 mt-2">Únete a la comunidad</p>
+        <div className="login-card">
+          <div className="login-header">
+            <h1 className="login-title">SportifyClub</h1>
+            <p className="login-subtitle">Únete a la comunidad</p>
           </div>
 
-          <div className="px-8 pb-10 pt-8">
-            <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">
-              Crear Cuenta
-            </h2>
+          <div className="login-body">
+            <h2 className="login-heading">Crear Cuenta</h2>
 
             {error && (
-              <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-5 py-4 rounded-xl text-center">
-                {error}
+              <div className="login-error">
+                <span className="error-text">{error}</span>
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Nombre completo
-                </label>
+            <form onSubmit={handleSubmit} className="login-form">
+              <div className="form-group">
+                <label className="form-label">Nombre completo</label>
                 <input
                   type="text"
                   name="nombre"
                   value={formData.nombre}
                   onChange={handleChange}
-                  className="w-full px-5 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-20 focus:border-indigo-500 transition-all placeholder-gray-400"
+                  className="form-input"
                   placeholder="Juan Pérez"
                   required
                   disabled={loading}
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Email
-                </label>
+              <div className="form-group">
+                <label className="form-label">Email</label>
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-5 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-20 focus:border-indigo-500 transition-all placeholder-gray-400"
+                  className="form-input"
                   placeholder="tucorreo@ejemplo.com"
                   required
                   disabled={loading}
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Contraseña
-                </label>
+              <div className="form-group">
+                <label className="form-label">Contraseña</label>
                 <input
                   type="password"
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full px-5 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-20 focus:border-indigo-500 transition-all placeholder-gray-400"
+                  className="form-input"
                   placeholder="Mínimo 6 caracteres"
                   required
                   minLength="6"
@@ -127,32 +122,38 @@ export default function Register() {
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Confirmar contraseña
-                </label>
+              <div className="form-group">
+                <label className="form-label">Confirmar contraseña</label>
                 <input
                   type="password"
                   name="confirmarPassword"
                   value={formData.confirmarPassword}
                   onChange={handleChange}
-                  className="w-full px-5 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-20 focus:border-indigo-500 transition-all placeholder-gray-400"
+                  className="form-input"
                   placeholder="Repite tu contraseña"
                   required
                   disabled={loading}
                 />
               </div>
 
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-lg py-4 rounded-xl hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
-              >
+              <button type="submit" disabled={loading} className="btn-submit">
                 {loading ? (
-                  <span className="flex items-center justify-center gap-3">
-                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                  <span className="loading-content">
+                    <svg className="spinner" viewBox="0 0 24 24">
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                        fill="none"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                      />
                     </svg>
                     Creando cuenta...
                   </span>
@@ -162,13 +163,10 @@ export default function Register() {
               </button>
             </form>
 
-            <div className="mt-8 text-center">
-              <p className="text-gray-600">
+            <div className="login-footer">
+              <p className="footer-text">
                 ¿Ya tienes cuenta?{" "}
-                <Link
-                  to="/login"
-                  className="font-bold text-indigo-600 hover:text-indigo-800 underline-offset-4 hover:underline transition"
-                >
+                <Link to="/login" className="footer-link">
                   Inicia sesión aquí
                 </Link>
               </p>
@@ -176,7 +174,7 @@ export default function Register() {
           </div>
         </div>
 
-        <p className="text-center text-gray-500 text-sm mt-8">
+        <p className="copyright">
           © 2025 SportifyClub • Reserva tu pista en segundos
         </p>
       </div>

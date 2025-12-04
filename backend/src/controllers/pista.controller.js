@@ -7,9 +7,7 @@ export const getPistas = async (req, res) => {
     const pistas = await Pista.find().populate("club", "name email").lean();
     res.json(pistas);
   } catch (err) {
-    res
-      .status(500)
-      .json({ msg: "Error al obtener pistas", error: err.message });
+    res.status(500).json({ msg: "Error al obtener pistas" });
   }
 };
 
@@ -21,7 +19,7 @@ export const getPistaById = async (req, res) => {
     if (!pista) return res.status(404).json({ msg: "Pista no encontrada" });
     res.json(pista);
   } catch (err) {
-    res.status(500).json({ msg: "Error al buscar pista", error: err.message });
+    res.status(500).json({ msg: "Error al buscar pista" });
   }
 };
 
@@ -33,9 +31,7 @@ export const getPistasByClub = async (req, res) => {
       .lean();
     res.json(pistas);
   } catch (err) {
-    res
-      .status(500)
-      .json({ msg: "Error al obtener pistas por club", error: err.message });
+    res.status(500).json({ msg: "Error al obtener pistas del club" });
   }
 };
 
@@ -75,7 +71,6 @@ export const getEstadisticasClub = async (req, res) => {
     }).select("total");
 
     const ingresosMes = reservasMes.reduce((sum, r) => sum + (r.total || 0), 0);
-
     const valoracion = 4.8;
 
     res.json({
@@ -85,9 +80,7 @@ export const getEstadisticasClub = async (req, res) => {
       valoracion: valoracion.toFixed(1),
     });
   } catch (err) {
-    res
-      .status(500)
-      .json({ msg: "Error al obtener estadísticas", error: err.message });
+    res.status(500).json({ msg: "Error al obtener estadísticas" });
   }
 };
 
@@ -105,7 +98,7 @@ export const createPista = async (req, res) => {
     const saved = await pista.save();
     res.status(201).json(saved);
   } catch (err) {
-    res.status(400).json({ msg: "Error al crear pista", error: err.message });
+    res.status(400).json({ msg: "Error al crear pista" });
   }
 };
 
@@ -121,9 +114,7 @@ export const updatePista = async (req, res) => {
     if (!pista) return res.status(404).json({ msg: "Pista no encontrada" });
     res.json(pista);
   } catch (err) {
-    res
-      .status(400)
-      .json({ msg: "Error actualizando pista", error: err.message });
+    res.status(400).json({ msg: "Error actualizando pista" });
   }
 };
 
@@ -133,6 +124,6 @@ export const deletePista = async (req, res) => {
     if (!pista) return res.status(404).json({ msg: "Pista no encontrada" });
     res.json({ msg: "Pista eliminada correctamente" });
   } catch (err) {
-    res.status(500).json({ msg: "Error al eliminar", error: err.message });
+    res.status(500).json({ msg: "Error al eliminar pista" });
   }
 };

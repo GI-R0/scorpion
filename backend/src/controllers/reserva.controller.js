@@ -15,7 +15,6 @@ export const createReserva = async (req, res) => {
   try {
     const { pista: pistaId, fecha, hora, duracion = 1 } = req.body;
     const usuarioId = req.user._id;
-    // console.log('Creating reserva for user:', usuarioId);
 
     const fechaDate = new Date(fecha);
     if (isNaN(fechaDate)) {
@@ -91,7 +90,7 @@ export const createReserva = async (req, res) => {
     res.status(201).json(populated);
   } catch (err) {
     await session.abortTransaction();
-    res.status(500).json({ msg: "Error creando reserva", error: err.message });
+    res.status(500).json({ msg: "Error creando reserva" });
   } finally {
     session.endSession();
   }
@@ -105,9 +104,7 @@ export const getReservas = async (req, res) => {
       .lean();
     res.json(reservas);
   } catch (err) {
-    res
-      .status(500)
-      .json({ msg: "Error al obtener reservas", error: err.message });
+    res.status(500).json({ msg: "Error al obtener reservas" });
   }
 };
 
@@ -125,7 +122,7 @@ export const getReservaById = async (req, res) => {
 
     res.json(reserva);
   } catch (err) {
-    res.status(500).json({ msg: "Error buscando reserva", error: err.message });
+    res.status(500).json({ msg: "Error buscando reserva" });
   }
 };
 
@@ -136,9 +133,7 @@ export const getMisReservas = async (req, res) => {
       .lean();
     res.json(reservas);
   } catch (err) {
-    res
-      .status(500)
-      .json({ msg: "Error al obtener tus reservas", error: err.message });
+    res.status(500).json({ msg: "Error al obtener tus reservas" });
   }
 };
 
@@ -167,9 +162,7 @@ export const updateReserva = async (req, res) => {
     ]);
     res.json(populated);
   } catch (err) {
-    res
-      .status(500)
-      .json({ msg: "Error actualizando reserva", error: err.message });
+    res.status(500).json({ msg: "Error actualizando reserva" });
   }
 };
 
@@ -209,9 +202,7 @@ export const deleteReserva = async (req, res) => {
     res.json({ msg: "Reserva eliminada correctamente" });
   } catch (err) {
     await session.abortTransaction();
-    res
-      .status(500)
-      .json({ msg: "Error al eliminar reserva", error: err.message });
+    res.status(500).json({ msg: "Error al eliminar reserva" });
   } finally {
     session.endSession();
   }

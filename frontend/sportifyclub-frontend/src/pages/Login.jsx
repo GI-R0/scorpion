@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import "../styles/Auth.css";
 
 export default function Login() {
   const { login } = useAuth();
@@ -30,32 +31,27 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center justify-center px-4 py-12">
+    <div className="login-container">
       <div className="w-full max-w-md">
-        <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
-          <div className="bg-gradient-to-r from-indigo-600 to-purple-600 px-8 py-10 text-center">
-            <h1 className="text-4xl font-bold text-white">SportifyClub</h1>
-            <p className="text-indigo-100 mt-2">Accede a tu cuenta</p>
+        <div className="login-card">
+          <div className="login-header">
+            <h1 className="login-title">SportifyClub</h1>
+            <p className="login-subtitle">Accede a tu cuenta</p>
           </div>
 
-          <div className="px-8 pb-10 pt-8">
-            <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">
-              Iniciar Sesión
-            </h2>
+          <div className="login-body">
+            <h2 className="login-heading">Iniciar Sesión</h2>
 
             {error && (
-              <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-5 py-4 rounded-xl flex items-center gap-3">
-                <span className="text-xl">Error</span>
-                <span className="text-sm">{error}</span>
+              <div className="login-error">
+                <span className="error-title">Error</span>
+                <span className="error-text">{error}</span>
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-semibold text-gray-700 mb-2"
-                >
+            <form onSubmit={handleSubmit} className="login-form">
+              <div className="form-group">
+                <label htmlFor="email" className="form-label">
                   Email
                 </label>
                 <input
@@ -63,7 +59,7 @@ export default function Login() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-5 py-4 border border-gray-300 rounded-xl text-base focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-20 focus:border-indigo-500 transition-all duration-200 placeholder-gray-400"
+                  className="form-input"
                   placeholder="tucorreo@ejemplo.com"
                   required
                   disabled={loading}
@@ -71,11 +67,8 @@ export default function Login() {
                 />
               </div>
 
-              <div>
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-semibold text-gray-700 mb-2"
-                >
+              <div className="form-group">
+                <label htmlFor="password" className="form-label">
                   Contraseña
                 </label>
                 <input
@@ -83,7 +76,7 @@ export default function Login() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-5 py-4 border border-gray-300 rounded-xl text-base focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-20 focus:border-indigo-500 transition-all duration-200 placeholder-gray-400"
+                  className="form-input"
                   placeholder="••••••••"
                   required
                   disabled={loading}
@@ -94,11 +87,11 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={loading || !email || !password}
-                className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-lg py-4 rounded-xl hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg"
+                className="btn-submit"
               >
                 {loading ? (
-                  <span className="flex items-center justify-center gap-3">
-                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                  <span className="loading-content">
+                    <svg className="spinner" viewBox="0 0 24 24">
                       <circle
                         className="opacity-25"
                         cx="12"
@@ -122,13 +115,10 @@ export default function Login() {
               </button>
             </form>
 
-            <div className="mt-8 text-center">
-              <p className="text-gray-600">
+            <div className="login-footer">
+              <p className="footer-text">
                 ¿Primera vez aquí?{" "}
-                <Link
-                  to="/register"
-                  className="font-bold text-indigo-600 hover:text-indigo-800 underline-offset-4 hover:underline transition"
-                >
+                <Link to="/register" className="footer-link">
                   Crea tu cuenta gratis
                 </Link>
               </p>
@@ -136,7 +126,7 @@ export default function Login() {
           </div>
         </div>
 
-        <p className="text-center text-gray-500 text-sm mt-8">
+        <p className="copyright">
           © 2025 SportifyClub • Todos los derechos reservados
         </p>
       </div>

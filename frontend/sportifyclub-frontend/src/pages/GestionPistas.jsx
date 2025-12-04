@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import API from "../api/axiosConfig";
 import { useAuth } from "../hooks/useAuth";
 import {
@@ -11,6 +11,7 @@ import {
   DollarSign,
   Activity,
 } from "lucide-react";
+import "../styles/GestionPistas.css";
 
 export default function GestionPistas() {
   const { user } = useAuth();
@@ -32,11 +33,7 @@ export default function GestionPistas() {
     superficie: "Césped",
   });
 
-  useEffect(() => {
-    fetchPistas();
-  }, []);
-
-  const fetchPistas = async () => {
+  const fetchPistas = useCallback(async () => {
     try {
       setLoading(true);
       let url = "/pistas";
@@ -53,7 +50,11 @@ export default function GestionPistas() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    fetchPistas();
+  }, [fetchPistas]);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -131,89 +132,73 @@ export default function GestionPistas() {
 
   if (loading)
     return (
-      <div className="p-8 text-center text-gray-600">Cargando pistas...</div>
+      <div className="loading-screen">
+        <div className="loading-content">
+          <div className="loading-spinner-lg"></div>
+          <p className="loading-text">Cargando pistas...</p>
+        </div>
+      </div>
     );
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
+    <div className="gestion-pistas-page">
+      <div className="gestion-container">
+        <div className="gestion-header">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">
-              Gestión de Pistas
-            </h1>
-            <p className="mt-2 text-gray-600">
+            <h1 className="gestion-title">Gestión de Pistas</h1>
+            <p className="gestion-subtitle">
               Administra tus instalaciones deportivas
             </p>
           </div>
-          <button
-            onClick={() => openModal()}
-            className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
-          >
+          <button onClick={() => openModal()} className="btn-add">
             <Plus size={20} />
             Nueva Pista
           </button>
         </div>
 
-        {error && (
-          <div className="bg-red-50 text-red-700 p-4 rounded-lg mb-6 border border-red-200">
-            {error}
-          </div>
-        )}
+        {error && <div className="error-alert">{error}</div>}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="gestion-grid">
           {pistas.map((pista) => (
-            <div
-              key={pista._id}
-              className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow"
-            >
-              <div className="h-48 overflow-hidden relative">
+            <div key={pista._id} className="pista-manage-card">
+              <div className="pista-manage-image-container">
                 <img
                   src={
                     pista.imagen ||
                     "https://via.placeholder.com/600x300?text=Pista"
                   }
                   alt={pista.nombre}
-                  className="w-full h-full object-cover"
+                  className="pista-manage-image"
                 />
-                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-sm font-semibold text-indigo-600">
-                  {pista.deporte}
-                </div>
+                <div className="pista-manage-badge">{pista.deporte}</div>
               </div>
 
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  {pista.nombre}
-                </h3>
+              <div className="pista-manage-content">
+                <h3 className="pista-manage-title">{pista.nombre}</h3>
 
-                <div className="space-y-2 text-gray-600 mb-6">
-                  <div className="flex items-center gap-2">
+                <div className="pista-manage-info">
+                  <div className="info-row">
                     <MapPin size={16} />
-                    <span className="text-sm">
-                      {pista.ubicacion || "Sin ubicación"}
-                    </span>
+                    <span>{pista.ubicacion || "Sin ubicación"}</span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="info-row">
                     <DollarSign size={16} />
-                    <span className="text-sm">{pista.precioHora}€ / hora</span>
+                    <span>{pista.precioHora}€ / hora</span>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="info-row">
                     <Activity size={16} />
-                    <span className="text-sm">{pista.superficie}</span>
+                    <span>{pista.superficie}</span>
                   </div>
                 </div>
 
-                <div className="flex gap-3 pt-4 border-t border-gray-100">
-                  <button
-                    onClick={() => openModal(pista)}
-                    className="flex-1 flex items-center justify-center gap-2 text-indigo-600 bg-indigo-50 py-2 rounded-lg hover:bg-indigo-100 transition-colors"
-                  >
+                <div className="pista-manage-actions">
+                  <button onClick={() => openModal(pista)} className="btn-edit">
                     <Edit size={18} />
                     Editar
                   </button>
                   <button
                     onClick={() => handleDelete(pista._id)}
-                    className="flex-1 flex items-center justify-center gap-2 text-red-600 bg-red-50 py-2 rounded-lg hover:bg-red-100 transition-colors"
+                    className="btn-delete"
                   >
                     <Trash2 size={18} />
                     Eliminar
@@ -225,61 +210,48 @@ export default function GestionPistas() {
         </div>
 
         {pistas.length === 0 && !loading && !error && (
-          <div className="text-center py-12 bg-white rounded-xl border border-dashed border-gray-300">
-            <p className="text-gray-500 text-lg">
-              No hay pistas registradas aún.
-            </p>
-            <button
-              onClick={() => openModal()}
-              className="mt-4 text-indigo-600 font-medium hover:text-indigo-800"
-            >
+          <div className="gestion-empty">
+            <p className="empty-text">No hay pistas registradas aún.</p>
+            <button onClick={() => openModal()} className="btn-create-first">
               Crear la primera pista
             </button>
           </div>
         )}
 
-        {/* Modal */}
         {isModalOpen && (
-          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl">
-              <div className="p-6 border-b border-gray-100 flex justify-between items-center sticky top-0 bg-white z-10">
-                <h2 className="text-2xl font-bold text-gray-900">
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h2 className="modal-title">
                   {editingPista ? "Editar Pista" : "Nueva Pista"}
                 </h2>
-                <button
-                  onClick={closeModal}
-                  className="text-gray-400 hover:text-gray-600 p-1"
-                >
+                <button onClick={closeModal} className="btn-close">
                   <X size={24} />
                 </button>
               </div>
 
-              <form onSubmit={handleSubmit} className="p-6 space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <form onSubmit={handleSubmit} className="modal-body">
+                <div className="form-grid">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Nombre
-                    </label>
+                    <label className="form-label">Nombre</label>
                     <input
                       type="text"
                       name="nombre"
                       value={formData.nombre}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+                      className="form-input"
                       placeholder="Ej: Pista Central"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Deporte
-                    </label>
+                    <label className="form-label">Deporte</label>
                     <select
                       name="deporte"
                       value={formData.deporte}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+                      className="form-select"
                     >
                       <option value="Pádel">Pádel</option>
                       <option value="Tenis">Tenis</option>
@@ -290,9 +262,7 @@ export default function GestionPistas() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Precio / Hora (€)
-                    </label>
+                    <label className="form-label">Precio / Hora (€)</label>
                     <input
                       type="number"
                       name="precioHora"
@@ -300,19 +270,17 @@ export default function GestionPistas() {
                       onChange={handleInputChange}
                       min="0"
                       required
-                      className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+                      className="form-input"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Superficie
-                    </label>
+                    <label className="form-label">Superficie</label>
                     <select
                       name="superficie"
                       value={formData.superficie}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+                      className="form-select"
                     >
                       <option value="Césped">Césped</option>
                       <option value="Arcilla">Arcilla</option>
@@ -324,36 +292,32 @@ export default function GestionPistas() {
                     </select>
                   </div>
 
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Ubicación
-                    </label>
+                  <div className="col-span-2">
+                    <label className="form-label">Ubicación</label>
                     <input
                       type="text"
                       name="ubicacion"
                       value={formData.ubicacion}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+                      className="form-input"
                       placeholder="Ej: Zona Norte, Pista 3"
                     />
                   </div>
 
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      URL de Imagen
-                    </label>
+                  <div className="col-span-2">
+                    <label className="form-label">URL de Imagen</label>
                     <input
                       type="text"
                       name="imagen"
                       value={formData.imagen}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+                      className="form-input"
                       placeholder="https://..."
                     />
                   </div>
 
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <div className="col-span-2">
+                    <label className="form-label">
                       Horarios Disponibles (separados por coma)
                     </label>
                     <textarea
@@ -361,42 +325,40 @@ export default function GestionPistas() {
                       value={formData.horariosDisponibles}
                       onChange={handleInputChange}
                       rows="3"
-                      className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+                      className="form-textarea"
                       placeholder="09:00, 10:00, 11:00..."
                     />
-                    <p className="text-xs text-gray-500 mt-1">Formato HH:MM</p>
+                    <p className="form-help">Formato HH:MM</p>
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  <div className="checkbox-group">
                     <input
                       type="checkbox"
                       name="iluminacion"
                       checked={formData.iluminacion}
                       onChange={handleInputChange}
                       id="iluminacion"
-                      className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                      className="form-checkbox"
                     />
                     <label
                       htmlFor="iluminacion"
-                      className="text-sm font-medium text-gray-700"
+                      className="form-label"
+                      style={{ marginBottom: 0 }}
                     >
                       Tiene Iluminación
                     </label>
                   </div>
                 </div>
 
-                <div className="flex justify-end gap-3 pt-6 border-t border-gray-100">
+                <div className="modal-footer">
                   <button
                     type="button"
                     onClick={closeModal}
-                    className="px-6 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+                    className="btn-cancel"
                   >
                     Cancelar
                   </button>
-                  <button
-                    type="submit"
-                    className="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium flex items-center gap-2"
-                  >
+                  <button type="submit" className="btn-save">
                     <Check size={20} />
                     {editingPista ? "Guardar Cambios" : "Crear Pista"}
                   </button>

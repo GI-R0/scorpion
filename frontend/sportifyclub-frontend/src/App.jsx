@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 import Home from "./pages/Home";
@@ -17,19 +18,22 @@ import GestionPistas from "./pages/GestionPistas";
 export default function App() {
   return (
     <AuthProvider>
-      <Router>
-        <div className="min-h-screen bg-gray-50">
+      <Router
+        future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true,
+        }}
+      >
+        <div className="app-container">
           <Navbar />
-          <main className="pt-16 pb-10">
+          <main className="main-content">
             <Routes>
-              {/* Públicas */}
               <Route path="/" element={<Home />} />
               <Route path="/pistas" element={<Pistas />} />
               <Route path="/pistas/:id" element={<PistaDetail />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
 
-              {/* Protegidas */}
               <Route
                 path="/perfil"
                 element={
@@ -47,7 +51,6 @@ export default function App() {
                 }
               />
 
-              {/* Solo club */}
               <Route
                 path="/club"
                 element={
@@ -65,7 +68,6 @@ export default function App() {
                 }
               />
 
-              {/* Solo admin */}
               <Route
                 path="/admin"
                 element={
@@ -84,6 +86,7 @@ export default function App() {
               />
             </Routes>
           </main>
+          <Footer />
         </div>
       </Router>
     </AuthProvider>

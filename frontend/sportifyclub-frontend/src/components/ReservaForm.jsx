@@ -2,6 +2,7 @@ import { useState } from "react";
 import API from "../api/axiosConfig";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import "../styles/ReservaForm.css";
 
 export default function ReservaForm({
   pistaId,
@@ -74,23 +75,13 @@ export default function ReservaForm({
   const total = precioHora * duracion;
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      {success && (
-        <div className="bg-green-50 border border-green-300 text-green-800 px-4 py-3 rounded-lg text-center font-medium">
-          {success}
-        </div>
-      )}
+    <form onSubmit={handleSubmit} className="reserva-form">
+      {success && <div className="reserva-success">{success}</div>}
 
-      {error && (
-        <div className="bg-red-50 border border-red-300 text-red-800 px-4 py-3 rounded-lg text-center">
-          {error}
-        </div>
-      )}
+      {error && <div className="reserva-error">{error}</div>}
 
-      <div>
-        <label className="block text-sm font-semibold text-gray-800 mb-2">
-          Fecha de la reserva
-        </label>
+      <div className="reserva-field">
+        <label className="reserva-label">Fecha de la reserva</label>
         <input
           type="date"
           value={date}
@@ -98,20 +89,18 @@ export default function ReservaForm({
           min={today}
           required
           disabled={loading}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-padel-primary focus:ring-4 focus:ring-green-500 focus:ring-opacity-20 transition"
+          className="reserva-input"
         />
       </div>
 
-      <div>
-        <label className="block text-sm font-semibold text-gray-800 mb-2">
-          Hora disponible
-        </label>
+      <div className="reserva-field">
+        <label className="reserva-label">Hora disponible</label>
         <select
           value={hour}
           onChange={(e) => setHour(e.target.value)}
           required
           disabled={loading || availableTimes.length === 0}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-padel-primary focus:ring-4 focus:ring-green-500 focus:ring-opacity-20 transition"
+          className="reserva-select"
         >
           <option value="">Selecciona una hora</option>
           {availableTimes.length === 0 ? (
@@ -126,16 +115,14 @@ export default function ReservaForm({
         </select>
       </div>
 
-      <div>
-        <label className="block text-sm font-semibold text-gray-800 mb-2">
-          Duración (horas)
-        </label>
+      <div className="reserva-field">
+        <label className="reserva-label">Duración (horas)</label>
         <select
           value={duracion}
           onChange={(e) => setDuracion(Number(e.target.value))}
           required
           disabled={loading}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-padel-primary focus:ring-4 focus:ring-green-500 focus:ring-opacity-20 transition"
+          className="reserva-select"
         >
           <option value={1}>1 hora</option>
           <option value={2}>2 horas</option>
@@ -144,16 +131,12 @@ export default function ReservaForm({
       </div>
 
       {precioHora > 0 && (
-        <div className="bg-indigo-50 border-2 border-indigo-200 rounded-lg p-4">
-          <div className="flex justify-between items-center">
-            <span className="text-lg font-semibold text-gray-700">
-              Precio Total:
-            </span>
-            <span className="text-3xl font-bold text-indigo-600">
-              {total.toFixed(2)}€
-            </span>
+        <div className="reserva-summary">
+          <div className="summary-row">
+            <span className="summary-label">Precio Total:</span>
+            <span className="summary-total">{total.toFixed(2)}€</span>
           </div>
-          <p className="text-sm text-gray-600 mt-2">
+          <p className="summary-detail">
             {precioHora}€/hora × {duracion} hora{duracion > 1 ? "s" : ""}
           </p>
         </div>
@@ -162,7 +145,7 @@ export default function ReservaForm({
       <button
         type="submit"
         disabled={loading || !date || !hour}
-        className="w-full bg-padel-primary text-white font-bold py-4 rounded-lg hover:bg-padel-secondary transition disabled:bg-gray-400 disabled:cursor-not-allowed"
+        className="btn-reservar"
       >
         {loading ? "Reservando..." : "Confirmar Reserva"}
       </button>

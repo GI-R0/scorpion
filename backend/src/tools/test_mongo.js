@@ -11,9 +11,7 @@ if (!uri) {
 }
 
 try {
-  // Top-level await es válido en ESM (project usa "type": "module")
   await mongoose.connect(uri, {
-    // Opciones recomendadas
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });

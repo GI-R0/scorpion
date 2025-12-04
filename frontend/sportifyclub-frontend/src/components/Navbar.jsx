@@ -6,39 +6,39 @@ export default function Navbar() {
 
   return (
     <nav className="navbar">
-      <div className="navbar-container flex justify-between items-center px-6 py-4 max-w-6xl mx-auto">
-        <Link to="/" className="navbar-brand text-2xl font-bold text-padel-primary">
+      <div className="container">
+        <Link to="/" className="navbar-brand">
           🎾 SportifyClub
         </Link>
 
-        <div className="navbar-nav flex gap-6 items-center">
-          <Link to="/" className="navbar-link text-gray-700 hover:text-padel-primary transition-colors">
+        <div className="navbar-nav">
+          <Link to="/" className="navbar-link">
             Inicio
           </Link>
-          <Link to="/pistas" className="navbar-link text-gray-700 hover:text-padel-primary transition-colors">
+          <Link to="/pistas" className="navbar-link">
             Pistas
           </Link>
 
           {user ? (
             <>
-              <Link to="/perfil" className="navbar-link text-gray-700 hover:text-padel-primary transition-colors">
+              <Link to="/perfil" className="navbar-link">
                 👤 {user.name || user.email}
               </Link>
               {user.role === "admin" && (
-                <Link to="/admin" className="navbar-link text-gray-700 hover:text-padel-primary transition-colors font-semibold">
+                <Link to="/admin" className="navbar-link">
                   ⚙️ Admin
                 </Link>
               )}
-              <button onClick={logout} className="btn btn-secondary px-4 py-2 text-sm">
+              <button onClick={logout} className="btn btn-secondary">
                 Salir
               </button>
             </>
           ) : (
             <>
-              <Link to="/login" className="btn btn-secondary px-4 py-2 text-sm">
+              <Link to="/login" className="btn btn-secondary">
                 Iniciar Sesión
               </Link>
-              <Link to="/register" className="btn btn-primary px-4 py-2 text-sm">
+              <Link to="/register" className="btn btn-primary">
                 Registrarse
               </Link>
             </>
