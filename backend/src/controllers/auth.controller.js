@@ -34,7 +34,6 @@ export const register = async (req, res) => {
       user: userWithoutPass,
     });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ msg: "Error al registrar usuario" });
   }
 };
@@ -65,7 +64,6 @@ export const login = async (req, res) => {
     const { password: _, ...userWithoutPass } = user.toObject();
     res.json({ token, user: userWithoutPass });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ msg: "Error del servidor" });
   }
 };

@@ -21,8 +21,7 @@ export default function Pistas() {
       const res = await API.get("/pistas");
       setPistas(res.data);
     } catch (err) {
-      console.error("Error fetching pistas:", err);
-      setError("No se pudieron cargar las pistas. Inténtalo más tarde.");
+      setError("No se pudieron cargar las pistas");
     } finally {
       setLoading(false);
     }

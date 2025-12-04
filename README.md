@@ -1,106 +1,263 @@
-# SportifyClub 🏆
+# 🎾 SportifyClub
 
-## Descripción del Proyecto
+> Una app para reservar pistas deportivas. Simple, rápida y funcional.
 
-SportifyClub es una plataforma web completa (Full Stack MERN) diseñada para la gestión y reserva de pistas deportivas. Su objetivo es conectar a clubes deportivos con usuarios aficionados, facilitando la administración de instalaciones y la reserva de espacios de manera intuitiva y eficiente.
-
-### Propósito y Lógica de Negocio
-
-El proyecto resuelve dos problemas principales:
-
-1.  **Para los Clubes**: Ofrece un panel de administración (`/club-panel`) para gestionar sus pistas, ver estadísticas de ingresos y ocupación, y administrar reservas.
-2.  **Para los Usuarios**: Proporciona una interfaz sencilla para buscar pistas por deporte, ver disponibilidad en tiempo real y realizar reservas instantáneas.
-
-La lógica se basa en roles diferenciados (`admin`, `club`, `user`), asegurando que cada actor tenga acceso solo a las funcionalidades pertinentes.
+![Estado](https://img.shields.io/badge/estado-funcionando-brightgreen)
+![Versión](https://img.shields.io/badge/versión-1.0.0-blue)
 
 ---
 
-## Arquitectura del Proyecto
+## ¿Qué es esto?
 
-El proyecto sigue una arquitectura **MERN** (MongoDB, Express, React, Node.js) modular y escalable.
+SportifyClub es una plataforma web donde puedes:
 
-### Backend (`/backend`)
+- **Ver pistas deportivas** disponibles (pádel, tenis, fútbol, etc.)
+- **Reservar** la que te guste para jugar
+- **Gestionar** tus reservas si eres usuario
+- **Administrar** tus pistas si tienes un club deportivo
 
-Construido con Node.js y Express, siguiendo el patrón MVC (Modelo-Vista-Controlador).
-
-- **Modelos (`/models`)**: Definición de esquemas de datos con Mongoose (`User`, `Pista`, `Reserva`).
-- **Controladores (`/controllers`)**: Lógica de negocio pura. Separa la recepción de peticiones del procesamiento de datos.
-- **Rutas (`/routes`)**: Definición de endpoints API RESTful.
-- **Middlewares (`/middlewares`)**:
-  - `auth.js`: Protección de rutas mediante JWT y verificación de roles.
-  - `upload.js`: Gestión de subida de imágenes a Cloudinary.
-- **Seed (`/seed`)**: Script para poblar la base de datos desde archivos CSV/Excel, simulando un entorno de producción inicial.
-
-### Frontend (`/frontend`)
-
-Construido con React y Vite, enfocado en la experiencia de usuario (UX/UI).
-
-- **Páginas (`/pages`)**: Vistas principales (`Home`, `Login`, `GestionPistas`, etc.).
-- **Componentes (`/components`)**: Elementos reutilizables (`Navbar`, `ReservaForm`, `CardPista`).
-- **Contexto (`/context`)**: Gestión de estado global para la autenticación (`AuthContext`).
-- **Hooks Personalizados (`/hooks`)**: Lógica reutilizable (`useAuth`).
-- **Estilos**: Uso de **Tailwind CSS** para un diseño moderno, responsivo y mantenible, complementado con variables CSS para consistencia de marca.
+Es como Booking, pero para pistas deportivas. Nada más, nada menos.
 
 ---
 
-## Características Destacadas
+## ¿Cómo lo uso?
 
-1.  **Gestión de Estado Avanzada**: Uso de `useReducer` y `useMemo` en el frontend para manejar lógica compleja de filtrado y formularios.
-2.  **Importación Masiva**: Funcionalidad para importar pistas desde archivos Excel (`.xlsx`), procesada en el frontend y sincronizada con el backend.
-3.  **Subida de Imágenes**: Integración con **Cloudinary** para almacenamiento de imágenes en la nube.
-4.  **Seguridad**: Autenticación JWT, hasheo de contraseñas con Bcrypt y protección de rutas por roles.
-5.  **Semilla de Datos**: Script de Node.js que lee archivos CSV para inicializar la base de datos con usuarios y pistas de prueba.
+### Opción 1: Solo quiero verlo funcionar
+
+1. Clona el repo:
+
+   ```bash
+   git clone https://github.com/GI-R0/SPORTS.git
+   cd SPORTS
+   ```
+
+2. Instala todo (backend):
+
+   ```bash
+   cd backend
+   npm install
+   ```
+
+3. Crea un archivo `.env` en la carpeta `backend`:
+
+   ```env
+   PORT=4000
+   MONGODB_URI=tu_mongodb_uri
+   JWT_SECRET=cualquier_texto_secreto
+   FRONTEND_URL=http://localhost:5173
+   ```
+
+4. Arranca el backend:
+
+   ```bash
+   npm run dev
+   ```
+
+5. En otra terminal, instala el frontend:
+
+   ```bash
+   cd frontend/sportifyclub-frontend
+   npm install
+   ```
+
+6. Arranca el frontend:
+
+   ```bash
+   npm run dev
+   ```
+
+7. Abre tu navegador en `http://localhost:5173`
+
+¡Listo! Ya debería estar funcionando.
 
 ---
 
-## Instalación y Despliegue
+## ¿Qué tecnologías usa?
 
-### Requisitos Previos
+**Frontend:**
 
-- Node.js (v14+)
-- MongoDB (Local o Atlas)
-- Cuenta de Cloudinary (para subida de imágenes)
+- React (para la interfaz)
+- Vite (para que cargue rápido)
+- CSS vanilla (con variables para los colores del Barça 💙❤️)
 
-### Configuración Local
+**Backend:**
 
-1.  **Clonar el repositorio**
-2.  **Backend**:
-    ```bash
-    cd backend
-    npm install
-    # Crear archivo .env con:
-    # PORT=5000
-    # MONGODB_URI=tu_uri_mongodb
-    # JWT_SECRET=tu_secreto
-    # CLOUDINARY_CLOUD_NAME=...
-    # CLOUDINARY_API_KEY=...
-    # CLOUDINARY_API_SECRET=...
-    npm run dev
-    ```
-3.  **Frontend**:
-    ```bash
-    cd frontend/sportifyclub-frontend
-    npm install
-    npm run dev
-    ```
+- Node.js + Express (el servidor)
+- MongoDB (la base de datos)
+- JWT (para el login)
 
-### Semilla de Datos (Opcional)
+**Extras:**
 
-Para cargar datos de prueba:
+- Cloudinary (para subir imágenes de las pistas)
+- Axios (para conectar frontend con backend)
 
-```bash
-cd backend
-npm run seed
+---
+
+## ¿Cómo está organizado?
+
+```
+sportifyclub/
+├── backend/              # El servidor
+│   ├── src/
+│   │   ├── controllers/  # La lógica de negocio
+│   │   ├── models/       # Los esquemas de datos
+│   │   ├── routes/       # Las rutas de la API
+│   │   └── app.js        # El archivo principal
+│   └── package.json
+│
+└── frontend/             # La interfaz
+    └── sportifyclub-frontend/
+        ├── src/
+        │   ├── pages/    # Las páginas (Home, Pistas, etc.)
+        │   ├── components/ # Componentes reutilizables
+        │   ├── styles/   # Los estilos CSS
+        │   └── App.jsx   # El componente principal
+        └── package.json
 ```
 
 ---
 
-## Tecnologías Utilizadas
+## Funcionalidades principales
 
-- **Frontend**: React, Vite, Tailwind CSS, Lucide React, Axios, XLSX.
-- **Backend**: Node.js, Express, Mongoose, JWT, Bcrypt, Multer, Cloudinary, CSV-Parser.
-- **Base de Datos**: MongoDB.
+### Para usuarios normales:
+
+- ✅ Ver todas las pistas disponibles
+- ✅ Buscar por nombre
+- ✅ Filtrar por deporte
+- ✅ Ver detalles de cada pista
+- ✅ Hacer reservas
+- ✅ Ver mis reservas
+- ✅ Cancelar reservas
+
+### Para dueños de clubes:
+
+- ✅ Crear nuevas pistas
+- ✅ Editar pistas existentes
+- ✅ Eliminar pistas
+- ✅ Ver estadísticas
+- ✅ Gestionar reservas
+
+### Para administradores:
+
+- ✅ Todo lo anterior
+- ✅ Gestionar usuarios
+- ✅ Ver todas las pistas del sistema
 
 ---
 
-Hecho con 💚 por el equipo de desarrollo de SportifyClub.
+## 🎨 Diseño
+
+- **Azul Barça**: #004d98
+- **Rojo Barça**: #a50044
+- **Dorado**: #edbb00
+
+Porque si vas a hacer algo, que al menos se vea bonito 😎
+
+---
+
+## 🔐 Seguridad
+
+- Las contraseñas se guardan encriptadas (bcrypt)
+- Usamos tokens JWT para el login
+- Las rutas están protegidas según el rol del usuario
+- CORS configurado para evitar accesos no autorizados
+
+---
+
+## ¿Problemas?
+
+Si algo no funciona:
+
+1. **El backend no arranca:**
+
+   - Revisa que MongoDB esté corriendo
+   - Verifica que el `.env` esté bien configurado
+
+2. **El frontend no conecta con el backend:**
+
+   - Asegúrate de que el backend esté en el puerto 4000
+   - Revisa la configuración de CORS en `backend/src/app.js`
+
+3. **No se ven las imágenes:**
+   - Configura Cloudinary en el `.env`
+   - O usa URLs de imágenes directas
+
+---
+
+## 📝 Variables de entorno necesarias
+
+Crea un archivo `.env` en la carpeta `backend` con esto:
+
+```env
+# Puerto del servidor
+PORT=4000
+
+# MongoDB
+MONGODB_URI=mongodb://localhost:27017/sportifyclub
+# O usa MongoDB Atlas: mongodb+srv://usuario:password@cluster.mongodb.net/sportifyclub
+
+# JWT
+JWT_SECRET=pon_aqui_cualquier_texto_secreto_largo
+
+# Frontend URL (para CORS)
+FRONTEND_URL=http://localhost:5173
+
+# Cloudinary (opcional, para subir imágenes)
+CLOUDINARY_CLOUD_NAME=tu_cloud_name
+CLOUDINARY_API_KEY=tu_api_key
+CLOUDINARY_API_SECRET=tu_api_secret
+```
+
+---
+
+## ¿Para qué sirve esto?
+
+Este proyecto es ideal para:
+
+- Aprender desarrollo Full Stack
+- Ver cómo funciona una app MERN completa
+- Entender autenticación con JWT
+- Practicar React y Node.js
+- Tener un portfolio decente
+
+---
+
+## 🤝 ¿Quieres contribuir?
+
+Si encuentras un bug o quieres añadir algo:
+
+1. Haz un fork
+2. Crea una rama (`git checkout -b feature/nueva-funcionalidad`)
+3. Haz commit (`git commit -m 'Añadí algo cool'`)
+4. Push (`git push origin feature/nueva-funcionalidad`)
+5. Abre un Pull Request
+
+---
+
+## 📄 Licencia
+
+Este proyecto es de código abierto. Úsalo como quieras, pero sería cool que me des crédito 😊
+
+---
+
+## 👨‍💻 Autor
+
+Hecho con ☕ y 💙 por un desarrollador que ama el deporte
+
+---
+
+## 🙏 Agradecimientos
+
+- A todos los que probaron la app y reportaron bugs
+- A Stack Overflow por salvarme la vida mil veces
+- Al café, mi mejor amigo durante el desarrollo
+
+---
+
+**¿Dudas?** Abre un issue en GitHub o mándame un mensaje.
+
+**¿Te gustó?** Dale una ⭐ al repo, me ayuda un montón.
+
+---
+
+_Última actualización: Diciembre 2024_
